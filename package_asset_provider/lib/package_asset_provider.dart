@@ -1,6 +1,13 @@
-library package_asset_provider; 
+library package_asset_provider;
 
-/// A Calculator.
+import 'package:flutter/services.dart'; 
+
 class PackageAssetProvider {
-  /// Returns [value] plus 1.
+  static const fooJson = 'packages/package_asset_provider/assets/json/foo.json';
+
+  PackageAssetProvider();
+
+  Future<String> readJsonString() async {
+    return rootBundle.loadString(fooJson);
+  }
 }

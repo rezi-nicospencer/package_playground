@@ -7,13 +7,27 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 
-  MyApp() {
-    AssetImage('imgs/house.png', package: 'package_asset_provider');
+  Future<String> stringFromPackage() {
+    return PackageAssetProvider().readJsonString();
+  }
+
+  Future<String> stringFromAssetBundle(BuildContext context) {
+    return DefaultAssetBundle.of(context).loadString(PackageAssetProvider.fooJson);
+  }
+
+  printJson(BuildContext context) async {
+    String assetBundleString = await stringFromAssetBundle(context);
+    String packageString = await stringFromPackage();
+
+    print("From default asset bundle: $assetBundleString");
+    print("From package: $packageString");
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    printJson(context);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
